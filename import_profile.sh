@@ -15,7 +15,7 @@ do
     echo ""
     echo "Install package "$name
     eval yum install -y $name
-done < "$PACKAGE_LIST_FILE"
+done < "$PROFILE_DIR/$PACKAGE_LIST_FILE"
 
 #remove the packages mentioned in remove_packges
 filename=remove_packages
@@ -25,4 +25,4 @@ do
     echo ""
     echo "Remove package "$name
     eval yum remove -y $name
-done < "$REMOVE_PACKAGE_LIST_FILE"
+done < "$PROFILE_DIR/$REMOVE_PACKAGE_LIST_FILE"
