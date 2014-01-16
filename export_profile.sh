@@ -1,4 +1,5 @@
 #!/bin/bash
+HOME=/home/iv/temp/fedora-package-profile
 source var.sh
 
 PROFILE_NAME=profile
@@ -15,17 +16,17 @@ done
 
 
 #prepare
-mkdir $PROFILE_DIR
-mkdir $PROFILE_DIR/$REPOS_DIR
+mkdir $PROFILE
+mkdir $PROFILE/$REPOS
 
 #get package list
-rpm -qa --qf "%{NAME}\n" > ./$PROFILE_DIR/$PACKAGE_LIST_FILE
+rpm -qa --qf "%{NAME}\n" > $PACKAGE_LIST_FILE
 
 #get yum repositories
-cp -rf $YUM_REPO_PATH/** ./$PROFILE_DIR/$REPOS_DIR/
+cp -rf $YUM_REPO_PATH/** $REPOS_DIR/
 
 #archive file
-tar -zcf $PROFILE_NAME.tar.gz $PROFILE_DIR
+tar -zcf $PROFILE_NAME.tar.gz $PROFILE
 
 #clean up
-rm -rf $PROFILE_DIR
+rm -rf $PROFILE

@@ -1,5 +1,7 @@
 #!/bin/bash
-source var.sh
+HOME=/home/iv/temp/fedora-package-profile
+
+source $HOME/var.sh
 
 #check if it's executed as root
 if [[ $EUID -ne 0 ]]; then
@@ -19,13 +21,13 @@ while getopts ":f:" opt; do
   esac
 done
 
-tar -xzvf $PROFILE_NAME.tar.gz
+tar -xzvf $HOME/$PROFILE_NAME.tar.gz -C $HOME
 
 #copy the repositories of the profile
-cp -rf $PROFILE_DIR/$REPOS_DIR/** $YUM_REPO_PATH
+cp -rf $REPOS_DIR/** $YUM_REPO_PATH
 
 #install the packages specified in insalled_packages
-if [ -f $PROFILE_DIR/$PACKAGE_LIST_FILE ]
+if [ -f $PACKAGE_LIST_FILE ]
 then
    while read -r line
    do
@@ -33,12 +35,12 @@ then
      echo ""
      echo "Install package "$name
      eval yum install -y $name
-   done < "$PROFILE_DIR/$PACKAGE_LIST_FILE"
+   done < "$PACKAGE_LIST_FILE"
 fi
 
 
 #remove the packages mentioned in remove_packges
-if [ -f $PROFILE_DIR/$REMOVE_PACKAGE_LIST_FILE ]
+if [ -f $REMOVE_PACKAGE_LIST_FILE ]
 then
   while read -r line
   do
@@ -46,7 +48,7 @@ then
     echo ""
     echo "Remove package "$name
     eval yum remove -y $name
-  done < "$PROFILE_DIR/$REMOVE_PACKAGE_LIST_FILE"
+  done < "$REMOVE_PACKAGE_LIST_FILE"
 fi
 
 echo "Done"
