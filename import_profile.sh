@@ -1,5 +1,5 @@
 #!/bin/bash
-HOME=/home/iv/temp/fedora-package-profile
+HOME=.
 
 source $HOME/var.sh
 
@@ -10,10 +10,14 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 PROFILE_NAME=profile
-while getopts ":f:" opt; do
+while getopts "hf:" opt; do
   case $opt in
     f)
       PROFILE_NAME=$OPTARG
+      ;;
+    h)
+      echo "Usage: import_profile -f <profile_name>"
+      exit 1
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
